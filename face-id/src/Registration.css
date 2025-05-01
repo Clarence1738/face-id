@@ -1,0 +1,74 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #eef2f3, #ffffff);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .register-card {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 370px;
+  }
+  
+  .register-card h2 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .video-preview, .captured-image {
+    margin: 1rem auto;
+    border: 2px solid #4a90e2;
+    border-radius: 8px;
+    width: 320px;
+    height: 240px;
+    object-fit: cover;
+  }
+  
+  .button {
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #357ab8;
+  }
+  
+  .status {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    color: #444;
+  }
+  
+  .toggle-options {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+  }
+  
+  .preview-container {
+    margin-top: 1rem;
+  }
+  
