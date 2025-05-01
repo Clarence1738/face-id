@@ -1,6 +1,8 @@
+// import * as tf from '@tensorflow/tfjs'; // Must be imported first
 import React, { useRef, useState, useEffect } from 'react';
 import * as faceapi from 'face-api.js';
 import './Registration.css';
+
 
 export default function Register() {
   const [name, setName] = useState('');
