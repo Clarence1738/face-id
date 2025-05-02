@@ -1,0 +1,5 @@
+[02-May-2025 16:42:09 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'name' in 'field list' in C:\xampp\htdocs\backend\checkin.php:58
+Stack trace:
+#0 C:\xampp\htdocs\backend\checkin.php(58): mysqli->query('INSERT INTO che...')
+#1 {main}
+  thrown in C:\xampp\htdocs\backend\checkin.php on line 58
