@@ -46,7 +46,7 @@ export default function Recognize() {
     };
 
     try {
-      const response = await fetch("http://localhost/backend/recognize.php", {
+      const response = await fetch("https://face-recogntion.gatimusch.xyz/backend/recognize.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
@@ -70,7 +70,7 @@ export default function Recognize() {
 
   const checkIfCheckedIn = async (userId, userName) => {
     try {
-      const response = await fetch("http://localhost/backend/checkin-status.php", {
+      const response = await fetch("https://face-recogntion.gatimusch.xyz/backend/checkin-status.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: userId })
@@ -103,7 +103,7 @@ export default function Recognize() {
     }
 
     try {
-      const response = await fetch("http://localhost/backend/checkin.php", {
+      const response = await fetch("https://face-recogntion.gatimusch.xyz/backend/checkin.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: user.id })

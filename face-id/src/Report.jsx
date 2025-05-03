@@ -5,7 +5,7 @@ export default function Report() {
   const [checkins, setCheckins] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost/backend/report.php")
+    fetch("https://face-recogntion.gatimusch.xyz/backend/report.php")
       .then(res => res.json())
       .then(data => setCheckins(data))
       .catch(err => {

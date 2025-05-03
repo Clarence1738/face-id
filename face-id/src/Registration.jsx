@@ -78,7 +78,7 @@ export default function Register() {
     };
 
     try {
-      const response = await fetch('http://localhost/backend/register.php', {
+      const response = await fetch('https://face-recogntion.gatimusch.xyz/backend/register.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
