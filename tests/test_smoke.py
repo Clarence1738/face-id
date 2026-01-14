@@ -27,7 +27,6 @@ def test_imports():
         import numpy
         import cv2
         import pytest
-        assert True
     except ImportError as e:
         assert False, f"Failed to import required package: {e}"
 
