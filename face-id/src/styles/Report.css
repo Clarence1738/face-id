@@ -1,0 +1,156 @@
+/* Report.css - Sleek Data Terminal */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+.report-container {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  background: #000;
+  font-family: 'Orbitron', sans-serif;
+  position: relative;
+}
+
+/* Subtle gradient background */
+.report-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: linear-gradient(180deg, rgba(0, 255, 200, 0.03) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.report-container h2 {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(0, 255, 200, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.6rem;
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.report-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+}
+
+.report-container > p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+}
+
+.report-container table {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.report-container thead tr {
+  border-bottom: 1px solid rgba(0, 255, 200, 0.2);
+}
+
+.report-container th {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+  color: rgba(0, 255, 200, 0.6);
+  padding: 1.25rem 1rem;
+  text-align: left;
+}
+
+.report-container tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+}
+
+.report-container tbody tr:hover {
+  background: rgba(0, 255, 200, 0.03);
+}
+
+.report-container tbody tr:hover td:first-child {
+  color: #00ffc8;
+}
+
+.report-container td {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 1.25rem 1rem;
+}
+
+.report-container td:first-child {
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.3s;
+}
+
+/* Accuracy column - with visual indicator */
+.report-container td:nth-child(4) {
+  position: relative;
+  color: #00ffc8;
+}
+
+.report-container td:nth-child(4)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: #00ffc8;
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/* Time column */
+.report-container td:nth-child(3) {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* IP column */
+.report-container td:nth-child(5) {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .report-container {
+    padding: 2rem 1rem;
+  }
+  
+  .report-container table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .report-container th,
+  .report-container td {
+    padding: 1rem 0.75rem;
+  }
+}
+
+/* Empty state animation */
+.report-container > p:only-of-type {
+  padding: 4rem 2rem;
+  border: 1px dashed rgba(0, 255, 200, 0.2);
+  border-radius: 4px;
+  max-width: 400px;
+  margin: 0 auto;
+}

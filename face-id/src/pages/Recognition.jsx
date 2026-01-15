@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as faceapi from 'face-api.js';
-import './Recognition.css';
+import { CheckCircle2, XCircle, AlertTriangle } from 'lucide-react';
+import '../styles/Recognition.css';
 
 export default function Recognize() {
   const videoRef = useRef(null);
   const [status, setStatus] = useState("Initializing...");
+  const [statusIcon, setStatusIcon] = useState(null);
   const [user, setUser] = useState(null); // State to store matched user info
   const [isCheckedIn, setIsCheckedIn] = useState(false); // State to track if user has checked in
   const [confidence, setConfidence] = useState(0); // Store confidence score
@@ -60,16 +62,19 @@ export default function Recognize() {
       if (response.ok && result.match) {
         setUser(result.user); // Set the matched user
         setConfidence(result.user.confidence || 0); // Store confidence score
-        setStatus(`✅ Match found: ${result.user.name} (${result.user.phone})`);
+        setStatus(`Match found: ${result.user.name} (${result.user.phone})`);
+        setStatusIcon(<CheckCircle2 size={20} />);
 
         // Check if the user is already checked in
         checkIfCheckedIn(result.user.id, result.user.name);
       } else {
-        setStatus("❌ No match found.");
+        setStatus("No match found.");
+        setStatusIcon(<XCircle size={20} />);
       }
     } catch (error) {
       console.error("Recognition error:", error);
-      setStatus("⚠️ Error contacting server.");
+      setStatus("Error contacting server.");
+      setStatusIcon(<AlertTriangle size={20} />);
     } finally {
       setIsScanning(false);
     }
@@ -84,28 +89,32 @@ export default function Recognize() {
       });
   
       const result = await response.json();
-      if (response.ok && result.checkedIn) {
-        setIsCheckedIn(true);
-        setStatus(`${userName} is already checked in.`);
+      if (result.checked_in) {
+        setIsCheckedIn(true); // User is already checked in
+        setStatus(`${userName} is already checked in today.`);
+        setStatusIcon(<AlertTriangle size={20} />);
       } else {
         setIsCheckedIn(false); // User is not checked in yet
       }
     } catch (error) {
       console.error("Error checking check-in status:", error);
-      setStatus("⚠️ Error contacting server for check-in status.");
+      setStatus("Error contacting server for check-in status.");
+      setStatusIcon(<AlertTriangle size={20} />);
     }
   };
   
 
   const handleCheckIn = async () => {
     if (!user) {
-      setStatus("❌ No user recognized to check in.");
+      setStatus("No user recognized to check in.");
+      setStatusIcon(<XCircle size={20} />);
       return;
     }
 
     // Check if user is already checked in
     if (isCheckedIn) {
       setStatus(`${user.name} is already checked in.`);
+      setStatusIcon(<AlertTriangle size={20} />);
       return;
     }
 
@@ -120,23 +129,26 @@ export default function Recognize() {
       });
 
       const result = await response.json();
-      console.log("Check-in response:", { ok: response.ok, status: response.status, result });
       
       if (response.ok) {
         setStatus(`✅ ${user.name} checked in at ${new Date().toLocaleTimeString()}`);
+        setStatusIcon(<CheckCircle2 size={20} />);
         setIsCheckedIn(true); // Update check-in status
       } else {
         // Check if already checked in (409 Conflict or message contains "already checked in")
         if (response.status === 409 || (result.message && result.message.toLowerCase().includes('already checked in'))) {
           setStatus(`${user.name} is already checked in.`);
+          setStatusIcon(<AlertTriangle size={20} />);
           setIsCheckedIn(true);
         } else {
           setStatus(`❌ Failed to check in: ${result.message || 'Unknown error'}`);
+          setStatusIcon(<XCircle size={20} />);
         }
       }
     } catch (error) {
       console.error("Check-in error:", error);
       setStatus("⚠️ Error contacting server for check-in.");
+      setStatusIcon(<AlertTriangle size={20} />);
     }
   };
 
@@ -169,9 +181,14 @@ export default function Recognize() {
           </div>
         </div>
       </div>
+      
+      <p className="status">
+        {statusIcon && <span className="status-icon">{statusIcon}</span>}
+        {status}
+      </p>
+      
       <button onClick={handleRecognize}>Recognize</button>
       {user && !isCheckedIn && <button onClick={handleCheckIn}>Check In</button>}
-      <p>{status}</p>
     </div>
   );
 }

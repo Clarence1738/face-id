@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Report.css';
+import '../styles/Report.css';
 
 export default function Report() {
   const [checkins, setCheckins] = useState([]);

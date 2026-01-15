@@ -2,10 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './styles/index.css';
 
-import Register from './Registration';
-import Recognize from './Recognition';
-import Report from './Report';
+import Register from './pages/Registration';
+import Recognize from './pages/Recognition';
+import Report from './pages/Report';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

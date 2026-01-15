@@ -1,11 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as faceapi from 'face-api.js';
-import './Registration.css';
+import { CheckCircle2, XCircle, AlertTriangle, AlertCircle, Search } from 'lucide-react';
+import '../styles/Registration.css';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [status, setStatus] = useState('Initializing...');
+  const [statusIcon, setStatusIcon] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -49,11 +51,13 @@ export default function Register() {
 
   const handleCapture = async () => {
     if (!name || !phone) {
-      setStatus('❗ Please fill in your details before capturing an image.');
+      setStatus('Please fill in your details before capturing an image.');
+      setStatusIcon(<AlertCircle size={20} />);
       return;
     }
 
-    setStatus('🔍 Processing face...');
+    setStatus('Processing face...');
+    setStatusIcon(<Search size={20} />);
     setIsScanning(true);
 
     // Draw the video frame to the canvas
@@ -68,7 +72,8 @@ export default function Register() {
 
     if (!detection) {
       setIsScanning(false);
-      setStatus('❌ No face detected. Try again.');
+      setStatus('No face detected. Try again.');
+      setStatusIcon(<XCircle size={20} />);
       return;
     }
 
@@ -86,15 +91,19 @@ export default function Register() {
       });
 
       if (response.ok) {
-        setStatus('✅ Registered successfully!');
+        setStatus('Registered successfully!');
+        setStatusIcon(<CheckCircle2 size={20} />);
         setName('');
         setPhone('');
       } else {
-        setStatus('❌ Error during registration.');
+        const result = await response.json();
+        setStatus(result.message || 'Error during registration.');
+        setStatusIcon(<XCircle size={20} />);
       }
     } catch (error) {
       console.error('Error:', error);
-      setStatus('⚠️ Failed to send data to server.');
+      setStatus('Failed to send data to server.');
+      setStatusIcon(<AlertTriangle size={20} />);
     } finally {
       setIsScanning(false);
     }
@@ -152,7 +161,10 @@ export default function Register() {
           Capture and Register
         </button>
 
-        <p className="status">{status}</p>
+        <p className="status">
+          {statusIcon && <span className="status-icon">{statusIcon}</span>}
+          {status}
+        </p>
       </div>
     </div>
   );
