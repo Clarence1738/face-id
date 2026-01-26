@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../utils/Encryption.php';
+
 class User {
     private $conn;
     private $table = 'users';
@@ -16,8 +18,8 @@ class User {
             throw new Exception("Prepare statement failed: " . $this->conn->error);
         }
 
-        $descriptor_json = json_encode($descriptor, JSON_UNESCAPED_UNICODE);
-        $stmt->bind_param("sss", $name, $phone, $descriptor_json);
+        $encrypted_descriptor = Encryption::encrypt($descriptor);
+        $stmt->bind_param("sss", $name, $phone, $encrypted_descriptor);
 
         if ($stmt->execute()) {
             return ['success' => true, 'user_id' => $this->conn->insert_id];
@@ -36,6 +38,7 @@ class User {
 
         $users = [];
         while ($row = $result->fetch_assoc()) {
+            $row['descriptor'] = Encryption::decrypt($row['descriptor']);
             $users[] = $row;
         }
         return $users;
@@ -53,7 +56,13 @@ class User {
         $stmt->execute();
         $result = $stmt->get_result();
 
-        return $result->fetch_assoc();
+        $user = $result->fetch_assoc();
+        
+        if ($user && isset($user['descriptor'])) {
+            $user['descriptor'] = Encryption::decrypt($user['descriptor']);
+        }
+        
+        return $user;
     }
 
     public function phoneExists($phone) {

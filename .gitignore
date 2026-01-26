@@ -1,1 +1,23 @@
 node_modules
+
+# Environment files - CRITICAL: Never commit encryption keys!
+.env
+backend/.htaccess
+
+# Encryption keys
+*.key
+*.pem
+
+# Database backups
+*.sql.backup
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log

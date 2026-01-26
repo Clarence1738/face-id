@@ -39,9 +39,8 @@ class RecognitionController {
             $minDistance = PHP_FLOAT_MAX;
             $matchedUser = null;
 
-            // Compare descriptors
             foreach ($users as $user) {
-                $dbDescriptor = json_decode($user['descriptor'], true);
+                $dbDescriptor = $user['descriptor'];
                 $distance = $this->euclideanDistance($inputDescriptor, $dbDescriptor);
 
                 if ($distance < $threshold && $distance < $minDistance) {
